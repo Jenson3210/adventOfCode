@@ -14,5 +14,9 @@ fun readFileLineByLineToInt(fileName: String): IntStream {
 }
 
 fun readFileLineCsvToInt(fileName: String): IntStream{
-    return File(ClassLoader.getSystemResource(fileName).file).readText(Charsets.UTF_8).split(",").stream().mapToInt { it.toInt() };
+    return readFileLineCsvToText(fileName).mapToInt { it.toInt() };
+}
+
+fun readFileLineCsvToText(fileName: String): Stream<String>{
+    return File(ClassLoader.getSystemResource(fileName).file).readText(Charsets.UTF_8).split(",").stream();
 }
