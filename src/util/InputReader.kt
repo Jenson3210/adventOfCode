@@ -4,6 +4,9 @@ import java.io.File
 import java.util.stream.IntStream
 import java.util.stream.Stream
 
+fun readFileToText(fileName: String): String {
+    return File(ClassLoader.getSystemResource(fileName).file).readText(Charsets.UTF_8)
+}
 
 fun readFileLineByLineToText(fileName: String): Stream<String> {
     return File(ClassLoader.getSystemResource(fileName).file).readLines(Charsets.UTF_8).stream()
@@ -14,9 +17,9 @@ fun readFileLineByLineToInt(fileName: String): IntStream {
 }
 
 fun readFileLineCsvToInt(fileName: String): IntStream{
-    return readFileLineCsvToText(fileName).mapToInt { it.toInt() };
+    return readFileLineCsvToText(fileName).mapToInt { it.toInt() }
 }
 
 fun readFileLineCsvToText(fileName: String): Stream<String>{
-    return File(ClassLoader.getSystemResource(fileName).file).readText(Charsets.UTF_8).split(",").stream();
+    return readFileToText(fileName).split(",").stream()
 }
