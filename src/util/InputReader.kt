@@ -20,6 +20,14 @@ fun readFileLineCsvToInt(fileName: String): IntStream{
     return readFileLineCsvToText(fileName).mapToInt { it.toInt() }
 }
 
+fun readFileLineToIntStream(fileName: String): IntStream{
+    return readFileLineToText(fileName).mapToInt { it.toInt() }
+}
+
 fun readFileLineCsvToText(fileName: String): Stream<String>{
     return readFileToText(fileName).split(",").stream()
+}
+
+fun readFileLineToText(fileName: String): Stream<String>{
+    return readFileToText(fileName).toCharArray().map { it.toString() }.stream()
 }

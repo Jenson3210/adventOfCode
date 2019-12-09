@@ -1,57 +1,122 @@
-package `2019`.`05`
+package `2019`.`07`
 
+import util.codeGenerator
+import util.codeGeneratorSingularUsage
 import util.readFileLineCsvToInt
 import kotlin.streams.toList
 
-private class Input(val input: MutableList<Int> = mutableListOf()) {
+private class Parameters(var input: MutableList<Int> = mutableListOf(), var output: MutableList<Int> = mutableListOf(0), var haltOccured: Boolean = false) {
+
     fun getNextValue(): Int {
         val toReturn = input[0]
         input.removeAt(0)
         return toReturn
     }
+
+    fun nextAmplifier(): Parameters {
+        input.clear()
+        input.addAll(output)
+        output.clear()
+        return this
+    }
 }
 
 fun main() {
-    OptCodeProgram(readFileLineCsvToInt("05.txt").toList().toMutableList(), Input(mutableListOf(1))).run()
-//    OptCodeProgram(readFileLineCsvToInt("05.txt").toList().toMutableList(), InputB(mutableListOf(1))).debug()
-    OptCodeProgram(readFileLineCsvToInt("05.txt").toList().toMutableList(), Input(mutableListOf(5))).run()
-//    OptCodeProgram(readFileLineCsvToInt("05.txt").toList().toMutableList(), InputB(mutableListOf(5))).debug()
+    val memory: MutableList<Int> = readFileLineCsvToInt("07.txt").toList().toMutableList()
+    println("A: " + solve(memory, false, false, "01234"))
+    println("B: " + solve(memory, false, true, "56789"))
 }
 
-private class OptCodeProgram(val code: MutableList<Int>, val input: Input) {
-    fun run() = execute(false)
-    fun debug() = execute(true)
+private fun solve(memory : MutableList<Int>, debug: Boolean, feedbackLoop: Boolean, options: String) : Int {
+    var params: Parameters
+    var programs: MutableList<OptCodeProgram>
+    var highestValue = 0
+    for (code in codeGeneratorSingularUsage(options, options.length)) {
+        programs = mutableListOf()
+        params = Parameters(haltOccured = !feedbackLoop)
+        if (debug) println("code: $code")
+        for (amplifier in 0..4) {
+            val memoryClone: MutableList<Int> = mutableListOf()
+            memoryClone.addAll(memory)
+            programs.add(OptCodeProgram(Character.getNumericValue(code[amplifier]), memoryClone))
+        }
+        do {
+            for (program in programs) {
+                params.nextAmplifier()
+                if (debug) {
+                    program.debug(params)
+                } else {
+                    program.run(params)
+                }
+            }
+        } while (!params.haltOccured)
+        if (params.output.last() > highestValue) {
+            highestValue = params.output.last()
+        }
+    }
+    return highestValue
+}
 
-    private fun execute(debug: Boolean) {
-        var i = 0
+private class OptCodeProgram(val phase: Int, val memory: MutableList<Int>) {
+    private var currentIndex: Int = 0
+    private var debug = false
+    private var running = false
+
+    fun run(params: Parameters) {
+        debug = false
+        execute(params)
+    }
+    fun debug(params: Parameters) {
+        debug = true
+        execute(params)
+    }
+
+    private fun execute(params: Parameters) {
+        if (!running) {
+            if (debug) println("Starting phase $phase")
+            params.input.add(0, phase)
+            running = true
+        } else {
+            if (debug) println("Restarting phase $phase")
+        }
         var operation: Operation? = null
         var verb: String
         var parameterModes : String
-        while (operation == null || operation !is HaltOperation) {
-            verb = String.format("%05d", code[i])
+        var stillHasInput = true
+        while ((operation == null || operation !is HaltOperation) && stillHasInput) {
+            verb = String.format("%05d", memory[currentIndex])
             parameterModes = verb.substring(0, 3)
             if (debug) print("\t${verb.substring(3, 5)}: ")
             operation = when (verb.substring(3, 5)) {
-                "01" -> SumOperation(i, code, parameterModes, debug)
-                "02" -> MultiplyOperation(i, code, parameterModes, debug)
-                "03" -> InputOperation(i, code, input, parameterModes, debug)
-                "04" -> DisplayOperation(i, code, parameterModes, debug)
-                "05" -> JumpIfTrueOperation(i, code, parameterModes, debug)
-                "06" -> JumpIfFalseOperation(i, code, parameterModes, debug)
-                "07" -> LessThanOperation(i, code, parameterModes, debug)
-                "08" -> EqualsOperation(i, code, parameterModes, debug)
+                "01" -> SumOperation(currentIndex, memory, parameterModes, debug)
+                "02" -> MultiplyOperation(currentIndex, memory, parameterModes, debug)
+                "03" -> InputOperation(currentIndex, memory, params, parameterModes, debug)
+                "04" -> OutputOperation(currentIndex, memory, params, parameterModes, debug)
+                "05" -> JumpIfTrueOperation(currentIndex, memory, parameterModes, debug)
+                "06" -> JumpIfFalseOperation(currentIndex, memory, parameterModes, debug)
+                "07" -> LessThanOperation(currentIndex, memory, parameterModes, debug)
+                "08" -> EqualsOperation(currentIndex, memory, parameterModes, debug)
                 "99" -> HaltOperation(debug)
                 else -> {
                     if (debug) println("Illegal argument: instruction = ${verb.substring(3, 5)}")
                     throw IllegalArgumentException()
                 }
             }
-            operation.perform()
-            i = (operation.nextIndex)
+
+            try {
+                operation.perform()
+                currentIndex = (operation.nextIndex)
+                if (currentIndex == 0) {
+                    params.haltOccured = true
+                }
+            } catch (indexOutOfBounds: IndexOutOfBoundsException) {
+                //ignore this one to go to next amp
+                if (debug) println()
+                stillHasInput = false
+            }
         }
     }
 }
-
 
 private abstract class Operation(var nextIndex: Int, val debug: Boolean) {
     abstract fun perform()
@@ -79,11 +144,12 @@ private abstract class MemoryOperation(val index: Int, parameterAmount: Int, val
 }
 
 //SHOW-OPERATIONS
-private class DisplayOperation(index: Int, memory: MutableList<Int>, parameterModes: String, debug: Boolean) : MemoryOperation(index, 1, memory, parameterModes, debug) {
+private class OutputOperation(index: Int, memory: MutableList<Int>, val params: Parameters, parameterModes: String, debug: Boolean) : MemoryOperation(index, 1, memory, parameterModes, debug) {
 
     override fun perform() {
-        if (debug)println(getParameter(1))
-        println("${getParameter(1)}")
+        params.output.add(getParameter(1))
+        if (debug) println("Output ${getParameter(1)}")
+        if (debug) println(getParameter(1))
     }
 }
 
@@ -98,8 +164,8 @@ private abstract class WriteOperation(index: Int, memory: MutableList<Int>, para
     abstract fun getResult() : Int
     abstract fun getDescription() : String
 }
-private class InputOperation(index: Int, memory: MutableList<Int>, val input: Input, parameterModes: String, debug: Boolean) : WriteOperation(index, memory, parameterModes, 1, 1, debug){
-    override fun getResult(): Int = input.getNextValue()
+private class InputOperation(index: Int, memory: MutableList<Int>, val params: Parameters, parameterModes: String, debug: Boolean) : WriteOperation(index, memory, parameterModes, 1, 1, debug){
+    override fun getResult(): Int = params.getNextValue()
     override fun getDescription(): String = "Input "
 }
 private class SumOperation(index: Int, memory: MutableList<Int>, parameterModes: String, debug: Boolean) : WriteOperation(index, memory, parameterModes, 3, 3, debug){
