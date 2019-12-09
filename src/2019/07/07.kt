@@ -38,7 +38,7 @@ private fun solve(memory : MutableList<Int>, debug: Boolean, feedbackLoop: Boole
         for (amplifier in 0..4) {
             val memoryClone: MutableList<Int> = mutableListOf()
             memoryClone.addAll(memory)
-            programs.add(OptCodeProgram(Character.getNumericValue(code[amplifier]), memoryClone))
+            programs.add(OptCodeProgram(memoryClone, Character.getNumericValue(code[amplifier])))
         }
         do {
             for (program in programs) {
@@ -57,7 +57,7 @@ private fun solve(memory : MutableList<Int>, debug: Boolean, feedbackLoop: Boole
     return highestValue
 }
 
-private class OptCodeProgram(val phase: Int, val memory: MutableList<Int>) {
+private class OptCodeProgram(val memory: MutableList<Int>, val phase: Int? = null) {
     private var currentIndex: Int = 0
     private var debug = false
     private var running = false
@@ -72,12 +72,12 @@ private class OptCodeProgram(val phase: Int, val memory: MutableList<Int>) {
     }
 
     private fun execute(params: Parameters) {
-        if (!running) {
-            if (debug) println("Starting phase $phase")
+        if (debug) println("Starting phase $phase")
+        if (!running && phase != null) {
             params.input.add(0, phase)
             running = true
         } else {
-            if (debug) println("Restarting phase $phase")
+            if (debug) println("Starting phase $phase")
         }
         var operation: Operation? = null
         var verb: String

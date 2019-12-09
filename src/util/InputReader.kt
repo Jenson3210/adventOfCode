@@ -2,6 +2,7 @@ package util
 
 import java.io.File
 import java.util.stream.IntStream
+import java.util.stream.LongStream
 import java.util.stream.Stream
 
 fun readFileToText(fileName: String): String {
@@ -18,6 +19,10 @@ fun readFileLineByLineToInt(fileName: String): IntStream {
 
 fun readFileLineCsvToInt(fileName: String): IntStream{
     return readFileLineCsvToText(fileName).mapToInt { it.toInt() }
+}
+
+fun readFileLineCsvToLong(fileName: String): LongStream {
+    return readFileLineCsvToText(fileName).mapToLong { it.toLong() }
 }
 
 fun readFileLineToIntStream(fileName: String): IntStream{
