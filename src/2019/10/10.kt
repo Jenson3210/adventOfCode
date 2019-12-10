@@ -18,7 +18,7 @@ private class AsteroidMap(val fields: MutableMap<Point, Boolean> = mutableMapOf(
         }
     }
     fun getHighestVisibleAsteroidCount() = fields.filter { it.value }.keys.map { getVisibleAsteroids(it).size }.max()
-    fun getHighestVisibleAsteroid() = fields.filter { it.value }.keys.sortedByDescending { getVisibleAsteroids(it).size }.first()
+    fun getHighestVisibleAsteroid() = fields.filter { it.value }.keys.maxBy { getVisibleAsteroids(it).size }!!
 
     private fun getVisibleAsteroids(coordinates: Point): MutableList<Pair<Double, MutableList<Point>>> {
         val fieldsCopy: MutableList<Pair<Double, MutableList<Point>>> = mutableListOf()
