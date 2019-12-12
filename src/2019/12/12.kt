@@ -45,8 +45,8 @@ fun main() {
     /** B **/
     val moonsB: MutableList<Moon> = mutableListOf()
     moonsB.addAll(moons)
-    var baseSnapshot = Snapshot(moonsB[0], moonsB[1], moonsB[2], moonsB[3])
-    var snapshot = Snapshot(moonsB[0], moonsB[1], moonsB[2], moonsB[3])
+    val baseSnapshot = Snapshot(moonsB[0], moonsB[1], moonsB[2], moonsB[3])
+    lateinit var snapshot: Snapshot
     var lcmFoundx = false
     var lcmx: Int = 0
     var lcmFoundy = false
