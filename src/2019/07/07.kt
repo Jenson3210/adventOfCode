@@ -1,6 +1,6 @@
 package `2019`.`07`
 
-import util.codeGeneratorSingularUsage
+import `2019`.codeGeneratorSingularUsage
 import util.readFileLineCsvToInt
 import kotlin.streams.toList
 

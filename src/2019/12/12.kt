@@ -1,6 +1,6 @@
 package `2019`.`12`
 
-import util.codeGeneratorSingularUsage
+import `2019`.codeGeneratorSingularUsage
 import util.leastCommonMultiplication
 import util.readFileLineByLineToText
 import java.text.DateFormat

@@ -1,4 +1,4 @@
-package util
+package `2019`
 
 fun codeGenerator(options: String, length: Int) : List<String>{
     if (length == 1) {
@@ -19,7 +19,10 @@ fun codeGeneratorSingularUsage(options: String, length: Int) : List<String>{
     }
     val opts: MutableList<String> = mutableListOf()
     for (char in options.toCharArray()) {
-        for (combination in codeGeneratorSingularUsage(options.replace(char.toString(), ""), length - 1)) {
+        for (combination in codeGeneratorSingularUsage(
+            options.replace(char.toString(), ""),
+            length - 1
+        )) {
             opts.add(combination + char)
         }
     }
