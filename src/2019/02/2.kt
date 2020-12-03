@@ -5,7 +5,7 @@ import kotlin.streams.toList
 
 
 fun main() {
-    print(searchResult("02.txt", 19690720))
+    print(searchResult("2019_02.txt", 19690720))
 }
 
 private fun searchResult(fileName: String, wantedSum: Int): Int {

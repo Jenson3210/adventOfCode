@@ -12,7 +12,7 @@ import kotlin.streams.toList
 
 fun main() {
 
-    val moons = readFileLineByLineToText("12.txt").map {
+    val moons = readFileLineByLineToText("2019_12.txt").map {
         val params = it
             .replace("<", "")
             .replace(">", "")

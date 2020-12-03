@@ -7,7 +7,7 @@ import kotlin.streams.toList
 //
 
 fun main() {
-    val lines = readFileLineByLineToText("03.txt").map { Line(it.toDirections()) }.toList()
+    val lines = readFileLineByLineToText("2019_03.txt").map { Line(it.toDirections()) }.toList()
     val junction1 = lines[0].points.intersect(lines[1].points).filter { it != Point(x = 0, y= 0, steps = 0) }
     val junction2 = lines[1].points.intersect(junction1)
     println("A: " + (junction1.map { it.getManhattanDistance() }.min()))

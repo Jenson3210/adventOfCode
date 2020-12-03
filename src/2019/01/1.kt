@@ -5,7 +5,7 @@ import kotlin.math.floor
 
 
 fun main() {
-    print(readFileLineByLineToInt("01.txt").map {
+    print(readFileLineByLineToInt("2019_01.txt").map {
         calculateFuelRequirement(
             it
         )

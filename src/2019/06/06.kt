@@ -4,8 +4,8 @@ import util.readFileLineByLineToText
 import java.util.stream.Stream
 
 fun main() {
-    println("1: " + SolarSystem(readFileLineByLineToText("06.txt")).countOrbits())
-    println("2: " + SolarSystem(readFileLineByLineToText("06.txt")).countOrbitSteps("YOU", "SAN"))
+    println("1: " + SolarSystem(readFileLineByLineToText("2019_06.txt")).countOrbits())
+    println("2: " + SolarSystem(readFileLineByLineToText("2019_06.txt")).countOrbitSteps("YOU", "SAN"))
 }
 
 private class SolarSystem(val bodies: MutableMap<String, CelestialBody> = mutableMapOf()) {

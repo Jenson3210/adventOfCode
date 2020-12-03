@@ -1,6 +1,5 @@
 package `2019`.`07`
 
-import util.codeGenerator
 import util.codeGeneratorSingularUsage
 import util.readFileLineCsvToInt
 import kotlin.streams.toList
@@ -22,7 +21,7 @@ private class Parameters(var input: MutableList<Int> = mutableListOf(), var outp
 }
 
 fun main() {
-    val memory: MutableList<Int> = readFileLineCsvToInt("07.txt").toList().toMutableList()
+    val memory: MutableList<Int> = readFileLineCsvToInt("2019_07.txt").toList().toMutableList()
     println("A: " + solve(memory, false, false, "01234"))
     println("B: " + solve(memory, false, true, "56789"))
 }

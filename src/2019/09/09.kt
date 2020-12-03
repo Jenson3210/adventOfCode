@@ -17,7 +17,7 @@ private class Parameters(var input: MutableList<Long> = mutableListOf(), var out
 }
 
 fun main() {
-    val memory: MutableList<Long> = readFileLineCsvToLong("09.txt").toList().toMutableList()
+    val memory: MutableList<Long> = readFileLineCsvToLong("2019_09.txt").toList().toMutableList()
     println("A: " + solve(1, memory, false))
     println("B: " + solve(2, memory, false))
 }

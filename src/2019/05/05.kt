@@ -12,10 +12,10 @@ private class Input(val input: MutableList<Int> = mutableListOf()) {
 }
 
 fun main() {
-    OptCodeProgram(readFileLineCsvToInt("05.txt").toList().toMutableList(), Input(mutableListOf(1))).run()
-//    OptCodeProgram(readFileLineCsvToInt("05.txt").toList().toMutableList(), InputB(mutableListOf(1))).debug()
-    OptCodeProgram(readFileLineCsvToInt("05.txt").toList().toMutableList(), Input(mutableListOf(5))).run()
-//    OptCodeProgram(readFileLineCsvToInt("05.txt").toList().toMutableList(), InputB(mutableListOf(5))).debug()
+    OptCodeProgram(readFileLineCsvToInt("2019_05.txt").toList().toMutableList(), Input(mutableListOf(1))).run()
+//    OptCodeProgram(readFileLineCsvToInt("2019_05.txt").toList().toMutableList(), InputB(mutableListOf(1))).debug()
+    OptCodeProgram(readFileLineCsvToInt("2019_05.txt").toList().toMutableList(), Input(mutableListOf(5))).run()
+//    OptCodeProgram(readFileLineCsvToInt("2019_05.txt").toList().toMutableList(), InputB(mutableListOf(5))).debug()
 }
 
 private class OptCodeProgram(val code: MutableList<Int>, val input: Input) {

@@ -4,7 +4,7 @@ import util.readFileLineCsvToLong
 import kotlin.streams.toList
 
 fun main() {
-    val memory: List<Long> = readFileLineCsvToLong("13.txt").toList()
+    val memory: List<Long> = readFileLineCsvToLong("2019_13.txt").toList()
     val paramsA = Parameters(false)
     //A
     val memoryA: MutableList<Long> = memory.toMutableList()

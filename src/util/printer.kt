@@ -15,3 +15,10 @@ enum class PrintColor(val color: String) {
 fun print(message: String, color: PrintColor) {
     print(color.color + message + PrintColor.RESET.color)
 }
+
+fun printDay(day: Int) {
+    println()
+    println("************************************")
+    println("* $day                                *")
+    println("************************************")
+}

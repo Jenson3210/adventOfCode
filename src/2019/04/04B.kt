@@ -4,7 +4,7 @@ import util.readFileLineCsvToInt
 import kotlin.streams.toList
 
 fun main() {
-    val range = readFileLineCsvToInt("04.txt").toList()
+    val range = readFileLineCsvToInt("2019_04.txt").toList()
     var password: String
     val options: MutableList<Int> = mutableListOf()
     for (i in range[0]..range[1]) {

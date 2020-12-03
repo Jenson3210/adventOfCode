@@ -1,12 +1,11 @@
 package `2019`.`08`
 
 import util.readFileLineToIntStream
-import java.util.Comparator
 import kotlin.streams.toList
 
 
 fun main() {
-    val image = Image(readFileLineToIntStream("08.txt").toList(), 25, 6)
+    val image = Image(readFileLineToIntStream("2019_08.txt").toList(), 25, 6)
     val layer = image.layers.stream().sorted { o1, o2 -> o1.countNumber(0).compareTo(o2.countNumber(0)) }.findFirst().orElseThrow()
     println(layer.countNumber(1) * layer.countNumber(2))
     println(image.print())

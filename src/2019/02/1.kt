@@ -6,7 +6,7 @@ import kotlin.streams.toList
 
 
 fun main() {
-    print(processIntcode(readFileLineCsvToInt("02.txt"))[0])
+    print(processIntcode(readFileLineCsvToInt("2019_02.txt"))[0])
 }
 
 private fun processIntcode(input: IntStream): List<Int> {

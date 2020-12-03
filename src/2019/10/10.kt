@@ -5,7 +5,7 @@ import kotlin.math.*
 
 fun main() {
     val asteroidMap = AsteroidMap()
-    readFileLineByLineToText("10.txt").forEach { asteroidMap.addRow(it.toList()) }
+    readFileLineByLineToText("2019_10.txt").forEach { asteroidMap.addRow(it.toList()) }
     println("A: " + asteroidMap.getHighestVisibleAsteroidCount() + ": " + asteroidMap.getHighestVisibleAsteroid())
     println("B: " + asteroidMap.get200ThElementCount())
 }
