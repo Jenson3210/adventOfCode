@@ -5,6 +5,10 @@ import java.util.stream.IntStream
 import java.util.stream.LongStream
 import java.util.stream.Stream
 
+fun readFile(fileName: String): File {
+    return File(ClassLoader.getSystemResource(fileName).file)
+}
+
 fun readFileToText(fileName: String): String {
     return File(ClassLoader.getSystemResource(fileName).file).readText(Charsets.UTF_8)
 }
