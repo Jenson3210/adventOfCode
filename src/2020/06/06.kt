@@ -10,7 +10,7 @@ fun main() {
     println(getGroups(readFile("2020_06.txt")).map { it.allPositiveAnswers().size }.sum())
 
     printDay(2)
-    print("Valid passwords: ")
+    print("Total amount of common questions answered positively: ")
     println(getGroups(readFile("2020_06.txt")).map { it.allCommonPositiveAnswers().size }.sum())
 }
 
