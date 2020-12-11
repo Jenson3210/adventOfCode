@@ -78,3 +78,16 @@ inline fun <T> Iterable<T>.sumByLong(selector: (T) -> Long): Long {
     }
     return sum
 }
+
+class Counter(var value: Long = 0) {
+    fun increment() {
+        increment(1)
+    }
+    fun increment(amount: Long) {
+        value += amount
+    }
+
+    override fun toString(): String {
+        return value.toString()
+    }
+}
