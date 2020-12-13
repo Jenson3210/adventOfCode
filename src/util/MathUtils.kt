@@ -79,6 +79,15 @@ inline fun <T> Iterable<T>.sumByLong(selector: (T) -> Long): Long {
     return sum
 }
 
+
+inline fun <T> Iterable<T>.multiplyLong(selector: (T) -> Long): Long {
+    var result = 1L
+    for (element in this) {
+        result *= selector(element)
+    }
+    return result
+}
+
 class Counter(var value: Long = 0) {
     fun increment() {
         increment(1)
