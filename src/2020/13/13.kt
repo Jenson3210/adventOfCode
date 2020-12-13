@@ -31,10 +31,10 @@ fun main() {
 
     val allNumbersMultiplied = busses.multiplyLong { it.value.toLong() }
     var timestamp = busses.first().value.toLong()
-    var toAdd: Long
+    var toAdd: Long = timestamp
     for (i in 1 until busses.size) {
-        toAdd = busses.take(i).multiplyLong { it.value.toLong() }
         timestamp = (timestamp..allNumbersMultiplied step toAdd).first { (it + busses[i].index) % busses[i].value.toLong() == 0L }
+        toAdd *= busses[i].value.toLong()
     }
     println(timestamp)
 }
