@@ -52,12 +52,20 @@ fun leastCommonMultiplication(listOfNumbers: List<Int>) : Long {
     }
 }
 
-fun cartesianProduct(a: List<*>, b: List<*>, vararg lists: List<*>): Set<List<*>> =
-    (listOf(a, b).plus(lists))
+fun cartesianProduct(vararg lists: List<*>): Set<List<*>> =
+    lists
         .fold(listOf(listOf<Any?>())) { acc, list ->
             acc.flatMap { newList -> list.map { element -> newList + element } }
         }
         .toSet()
+
+//removed as part of day 14 for 2020. Earlier solutions might be broken
+// fun cartesianProduct(a: List<*>, b: List<*>, vararg lists: List<*>): Set<List<*>> =
+//    (listOf(a, b).plus(lists))
+//        .fold(listOf(listOf<Any?>())) { acc, list ->
+//            acc.flatMap { newList -> list.map { element -> newList + element } }
+//        }
+//        .toSet()
 
 fun isBetween(a: Int, lowerBound: Int, upperBound: Int): Boolean {
     if (a < lowerBound) return false
