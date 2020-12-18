@@ -1,5 +1,7 @@
 package util
 
+import java.util.stream.Stream
+
 fun leastCommonMultiplication(listOfNumbers: List<Int>) : Long {
     val numbers = listOfNumbers.toMutableList()
     var divider = 2
@@ -83,6 +85,14 @@ inline fun <T> Iterable<T>.sumByLong(selector: (T) -> Long): Long {
     var sum = 0L
     for (element in this) {
         sum += selector(element)
+    }
+    return sum
+}
+
+fun Stream<Long>.sum(): Long {
+    var sum = 0L
+    for (element in this) {
+        sum += element
     }
     return sum
 }
