@@ -9,7 +9,7 @@ fun main() {
     printDay(1)
     print("Corners multiplied: ")
 //    println(Image(readFileLineByLineToText("2020_20REAL.txt")).corners.multiplyLong { it.tileId.toLong() })
-    Image(readFileLineByLineToText("2020_20.txt")).printImage()
+    Image(readFileLineByLineToText("2020_20.txt"))
 
     printDay(2)
     print("Valid string count: ")
@@ -24,30 +24,26 @@ private class Image(input: Stream<String>) {
     val image = Array(imageSize) {Array(imageSize) {' '}}
 
     init {
-        val notPlacedTiles = this.tiles.toMutableList()
-        var tempImageBorders = this.imageBorders
-        var outsideTiles: MutableList<ImageTile>
-        var cornerTile: ImageTile
-        var path: MutableList<ImageTile>
-        val cornerBorders: MutableList<String> = mutableListOf()
-        cornerBorders.addAll(corners[0].getBorders().intersect(imageBorders))
-        val directionBorder: MutableList<String> = mutableListOf()
-        directionBorder.addAll(notPlacedTiles.first { it.getBorders().any { cornerBorders.contains(it) } }.getBorders())
-        while (notPlacedTiles.isNotEmpty()) {
-            outsideTiles = notPlacedTiles.filter { it.getBorders().any { tempImageBorders.contains(it) } }.toMutableList()
-            cornerTile = outsideTiles.first { it.getBorders().intersect(cornerBorders).isNotEmpty() }
-            path = mutableListOf(cornerTile)
-            path.addAll(cornerTile.getChain(outsideTiles.filter { it.tileId != cornerTile.tileId }, cornerTile, directionBorder))
-            directionBorder.addAll(path[1].getBorders())
+        val remainingTiles = tiles.toMutableList()
 
-            for (tile in path) {
-                tile.getTile(cornerBorders)
-            }
-            cornerBorders.addAll(path.first().getBorders())
-            cornerBorders.addAll(path.last().getBorders())
+        var remainingBorder = tiles.flatMap { it.getBorders() }.groupBy { it }.filter { it.value.size == 1 }.keys.toList()
+        var cornerTiles = remainingTiles.filter { it.getBorders().intersect(remainingBorder).size == 2 }.toMutableList()
+        var topLeftCorner = cornerTiles.removeAt(0)
+        var topRightCorner = cornerTiles.minBy { topLeftCorner.getPathToPassingBy(remainingTiles, it, remainingBorder).size }!!
+        var path = topLeftCorner.getPathToPassingBy(remainingTiles, topRightCorner, remainingBorder)
+        println(path)
+        remainingTiles.removeAll(path)
 
-            notPlacedTiles.removeIf { path.contains(it) }
-            tempImageBorders = notPlacedTiles.flatMap { it.getBorders() }.groupBy { it }.filter { it.value.size == 1 }.keys
+        while (remainingTiles.isNotEmpty()) {
+            val outsideTiles = remainingTiles.filter { it.getBorders().intersect(remainingBorder).size == 2 }.toMutableList()
+            topLeftCorner = remainingTiles.first { it.getBorders().intersect(path.first().getBorders()).size == 1 }
+            topRightCorner = remainingTiles.first { it.getBorders().intersect(path.last().getBorders()).size == 1 }
+            remainingBorder = path.flatMap { it.getBorders() }
+            path = topLeftCorner.getPathToPassingBy(remainingTiles, topRightCorner, remainingBorder)
+            println(path)
+
+            remainingTiles.removeAll(path)
+
         }
     }
 
@@ -84,21 +80,12 @@ private class ImageTile(val tileId: Int, val bytes: List<String>) {
         return bytes
     }
 
-    fun getChain(toChain: List<ImageTile>, start: ImageTile, nextBorders: List<String>? = null) : List<ImageTile> {
-        if (toChain.size == 1) {
-            if (isNeighbour(toChain[0])) {
-                return listOf(toChain[0])
-            }
-            return emptyList()
+    fun getPathToPassingBy(possibleTiles: List<ImageTile>, destination: ImageTile, borders: List<String>) : List<ImageTile> {
+        if (this.tileId == destination.tileId) {
+            return listOf(this)
         }
-        val chain =
-            if (nextBorders != null) {
-                mutableListOf(toChain.filter { nextBorders.intersect(it.getBorders()).isNotEmpty() }.first { start.isNeighbour(it) })
-            } else {
-                mutableListOf(toChain.first { start.isNeighbour(it) })
-            }
-        chain.addAll(getChain(toChain.filter { it.tileId != chain[0].tileId }, chain[0]))
-        return chain
+
+        return listOf(this).plus(possibleTiles.filter { it.getBorders().intersect(borders).isNotEmpty() }.filter { it.isNeighbour(this) }.minBy { it.getPathToPassingBy(possibleTiles.minus(this), destination, borders).size }!!)
     }
 
     private fun isNeighbour(other: ImageTile) : Boolean {
