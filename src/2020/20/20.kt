@@ -1,27 +1,29 @@
 package `2020`.`20`
 
+import util.multiplyLong
 import util.printDay
 import util.readFileLineByLineToText
+import java.util.*
 import java.util.stream.Stream
-import kotlin.math.sqrt
 
 fun main() {
+    val image = Image(readFileLineByLineToText("2020_20REAL.txt"))
     printDay(1)
     print("Corners multiplied: ")
-//    println(Image(readFileLineByLineToText("2020_20REAL.txt")).corners.multiplyLong { it.tileId.toLong() })
-    Image(readFileLineByLineToText("2020_20.txt"))
+    println(image.getCorners().multiplyLong { it.tileId.toLong() })
 
     printDay(2)
-    print("Valid string count: ")
+    print("The habitat's water roughness is: ")
 //    println(readFileLineByLineToText("2020_19.txt").toList())
 }
 
 private class Image(input: Stream<String>) {
     val tiles = input.toImageTiles()
-    val imageBorders = tiles.flatMap { it.getBorders() }.groupBy { it }.filter { it.value.size == 1 }.keys
-    val corners = tiles.filter { it.getBorders().intersect(imageBorders).size == 2 }
-    val imageSize = sqrt(tiles.size.toDouble()).toInt() * (corners[0].bytes[0].length - 2)
-    val image = Array(imageSize) {Array(imageSize) {' '}}
+    val image: MutableList<List<ImageTile>> = mutableListOf()
+
+    fun getCorners(): List<ImageTile> {
+        return listOf(image.first().first(), image.first().last(), image.last().first(), image.last().last())
+    }
 
     init {
         val remainingTiles = tiles.toMutableList()
@@ -30,26 +32,20 @@ private class Image(input: Stream<String>) {
         var cornerTiles = remainingTiles.filter { it.getBorders().intersect(remainingBorder).size == 2 }.toMutableList()
         var topLeftCorner = cornerTiles.removeAt(0)
         var topRightCorner = cornerTiles.minBy { topLeftCorner.getPathToPassingBy(remainingTiles, it, remainingBorder).size }!!
-        var path = topLeftCorner.getPathToPassingBy(remainingTiles, topRightCorner, remainingBorder)
-        println(path)
-        remainingTiles.removeAll(path)
-
-        while (remainingTiles.isNotEmpty()) {
-            val outsideTiles = remainingTiles.filter { it.getBorders().intersect(remainingBorder).size == 2 }.toMutableList()
-            topLeftCorner = remainingTiles.first { it.getBorders().intersect(path.first().getBorders()).size == 1 }
-            topRightCorner = remainingTiles.first { it.getBorders().intersect(path.last().getBorders()).size == 1 }
-            remainingBorder = path.flatMap { it.getBorders() }
+        var path: List<ImageTile>
+        do {
             path = topLeftCorner.getPathToPassingBy(remainingTiles, topRightCorner, remainingBorder)
-            println(path)
+            image.add(path)
 
             remainingTiles.removeAll(path)
-
-        }
+            remainingBorder = path.flatMap { it.getBorders() }
+            try {
+                topLeftCorner = remainingTiles.first { it.getBorders().intersect(path.first().getBorders()).size == 1 }
+                topRightCorner = remainingTiles.first { it.getBorders().intersect(path.last().getBorders()).size == 1 }
+            } catch (ignore: NoSuchElementException) {}
+        } while (remainingTiles.isNotEmpty())
     }
 
-    fun printImage() {
-        image.forEach { println(String(it.toCharArray())) }
-    }
 }
 
 private class ImageTile(val tileId: Int, val bytes: List<String>) {
@@ -84,8 +80,9 @@ private class ImageTile(val tileId: Int, val bytes: List<String>) {
         if (this.tileId == destination.tileId) {
             return listOf(this)
         }
+        val shortestPathNeighbor = possibleTiles.filter { it.getBorders().intersect(borders).isNotEmpty() }.minus(this).filter { it.isNeighbour(this) }.minBy { it.getPathToPassingBy(possibleTiles.minus(this), destination, borders).size }!!
 
-        return listOf(this).plus(possibleTiles.filter { it.getBorders().intersect(borders).isNotEmpty() }.filter { it.isNeighbour(this) }.minBy { it.getPathToPassingBy(possibleTiles.minus(this), destination, borders).size }!!)
+        return listOf(this).plus(shortestPathNeighbor.getPathToPassingBy(possibleTiles.minus(this), destination, borders))
     }
 
     private fun isNeighbour(other: ImageTile) : Boolean {
