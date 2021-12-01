@@ -34,7 +34,7 @@ private class Image(input: Stream<String>) {
             remainingTiles.filter { it.getNESWBorders().intersect(remainingBorder).size == 2 }.toMutableList()
         var topLeftCorner = cornerTiles.removeAt(0)
         var topRightCorner =
-            cornerTiles.minBy { topLeftCorner.getPathToPassingBy(remainingTiles, it, remainingBorder).size }!!
+            cornerTiles.minByOrNull { topLeftCorner.getPathToPassingBy(remainingTiles, it, remainingBorder).size }!!
         var path: List<ImageTile>
         do {
             path = topLeftCorner.getPathToPassingBy(remainingTiles, topRightCorner, remainingBorder)
@@ -62,7 +62,7 @@ private class Image(input: Stream<String>) {
 
 private class ImageTile(val tileId: Int, var bytes: MutableList<String>) {
     fun getNESWBorders(): List<String> {
-        return getRealNESWBorders().map { listOf(it, it.reversed()).min()!! }
+        return getRealNESWBorders().map { listOf(it, it.reversed()).minOrNull()!! }
     }
 
     fun getPathToPassingBy(
@@ -76,7 +76,7 @@ private class ImageTile(val tileId: Int, var bytes: MutableList<String>) {
         val shortestPathNeighbor =
             possibleTiles.filter { it.getNESWBorders().intersect(borders).isNotEmpty() }.minus(this)
                 .filter { it.isNeighbour(this) }
-                .minBy { it.getPathToPassingBy(possibleTiles.minus(this), destination, borders).size }!!
+                .minByOrNull { it.getPathToPassingBy(possibleTiles.minus(this), destination, borders).size }!!
 
         return listOf(this).plus(
             shortestPathNeighbor.getPathToPassingBy(
@@ -158,8 +158,8 @@ private class ImageTile(val tileId: Int, var bytes: MutableList<String>) {
 
     fun searchObjects(objectToSearch: List<Pair<Int, Int>>): Boolean {
         var found = false
-        val maxHeight = objectToSearch.maxBy { it.first }!!.first
-        val maxWidth = objectToSearch.maxBy { it.second }!!.second
+        val maxHeight = objectToSearch.maxByOrNull { it.first }!!.first
+        val maxWidth = objectToSearch.maxByOrNull { it.second }!!.second
         (0..(bytes.size - maxHeight)).forEach { x ->
             (0..(bytes.size - maxWidth)).forEach { y ->
                 val actualSpots = objectToSearch.map { Pair(it.first + x,  it.second + y) }
@@ -179,7 +179,7 @@ private class ImageTile(val tileId: Int, var bytes: MutableList<String>) {
     fun countRoughWaters(): Int {
         println()
         bytes.forEach { println(it) }
-        return bytes.sumBy { it.count { it == '#' } }
+        return bytes.sumOf { it.count { it == '#' } }
     }
 }
 

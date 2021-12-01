@@ -6,7 +6,7 @@ import kotlin.streams.toList
 
 fun main() {
     val image = Image(readFileLineToIntStream("2019_08.txt").toList(), 25, 6)
-    val layer = image.layers.stream().sorted { o1, o2 -> o1.countNumber(0).compareTo(o2.countNumber(0)) }.findFirst().orElseThrow()
+    val layer = image.layers.stream().sorted { o1, o2 -> o1.countNumber(0).compareTo(o2.countNumber(0)) }.findFirst().get()
     println(layer.countNumber(1) * layer.countNumber(2))
     println(image.print())
 }

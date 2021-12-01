@@ -3,14 +3,6 @@ package `2020`.`01`
 import util.cartesianProduct
 import util.printDay
 import util.readFileLineByLineToInt
-import util.readFileLineCsvToText
-import java.util.*
-import java.util.stream.IntStream
-import java.util.stream.Stream
-import kotlin.math.exp
-import kotlin.math.floor
-import kotlin.math.max
-import kotlin.math.min
 import kotlin.streams.toList
 
 
@@ -30,11 +22,13 @@ fun main() {
 
 private class ExpenseReport(val expenses: List<Expense>) {
     fun getPairsThatSumTo(sum: Int): List<ExpenseCombination> {
-        return cartesianProduct(expenses, expenses).map { ExpenseCombination(it as List<Expense>) }.filter { it.getSum() == sum }.toList();
+        return cartesianProduct(expenses, expenses).map { ExpenseCombination(it as List<Expense>) }
+            .filter { it.getSum() == sum }.toList();
     }
 
     fun getTripletsThatSumTo(sum: Int): List<ExpenseCombination> {
-        return cartesianProduct(expenses, expenses, expenses).map { ExpenseCombination(it as List<Expense>) }.filter { it.getSum() == sum }.toList();
+        return cartesianProduct(expenses, expenses, expenses).map { ExpenseCombination(it as List<Expense>) }
+            .filter { it.getSum() == sum }.toList();
     }
 }
 

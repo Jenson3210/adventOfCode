@@ -10,7 +10,7 @@ fun main() {
 
     printDay(1)
     print("Highest Seat number: ")
-    println(plane.getSeatIdStream(readFileLineByLineToText("2020_05.txt")).toList().max())
+    println(plane.getSeatIdStream(readFileLineByLineToText("2020_05.txt")).toList().maxOrNull())
 
     printDay(2)
     print("Valid passwords: ")

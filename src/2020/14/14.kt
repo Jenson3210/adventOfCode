@@ -20,7 +20,7 @@ fun main() {
 
 private class PortComputer(val memoryLines: List<String>) {
     lateinit var mask: String
-    val memory = Array((memoryLines.filter { !it.contains("mask") }.map { it.substringAfter("[").substringBefore("]").toInt() }.max() ?: 0) + 1) {0L}
+    val memory = Array((memoryLines.filter { !it.contains("mask") }.map { it.substringAfter("[").substringBefore("]").toInt() }.maxOrNull() ?: 0) + 1) {0L}
     val memoryDecoder = mutableMapOf<Long, Long>()
 
     fun compute() : Long {

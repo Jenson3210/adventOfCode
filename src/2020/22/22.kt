@@ -42,7 +42,7 @@ private class Game {
 
     fun play() : Game {
         while (decks.none { it.isEmpty() }) {
-            val goTo = decks.maxBy { it[0] }!!
+            val goTo = decks.maxByOrNull { it[0] }!!
             val list = decks.map { it.removeAt(0) }.sortedDescending()
             goTo.addAll(list)
         }
@@ -77,7 +77,7 @@ private class Game {
                         goTo.add(list.second)
                     }
                 } else {
-                    goTo = decks.maxBy { it[0] }!!
+                    goTo = decks.maxByOrNull { it[0] }!!
                     goTo.addAll(list.toList().sortedDescending())
                 }
                 decks.forEach { it.removeAt(0) }

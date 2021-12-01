@@ -102,10 +102,10 @@ private class Parameters(var fields: MutableMap<Field, Color> = mutableMapOf(), 
         }
     }
     fun displayGrid() {
-        val xMin = fields.keys.minBy { it.column }!!.column
-        val xMax = fields.keys.maxBy { it.column }!!.column
-        val yMin = fields.keys.minBy { it.row }!!.row
-        val yMax = fields.keys.maxBy { it.row }!!.row
+        val xMin = fields.keys.minByOrNull { it.column }!!.column
+        val xMax = fields.keys.maxByOrNull { it.column }!!.column
+        val yMin = fields.keys.minByOrNull { it.row }!!.row
+        val yMax = fields.keys.maxByOrNull { it.row }!!.row
         for (row in yMin..yMax) {
             for (column in xMin..xMax) {
                 if (fields.filter { it.key.row == row && it.key.column == column }.values.firstOrNull() == Color.WHITE) {

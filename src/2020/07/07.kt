@@ -21,7 +21,7 @@ private class Rule() {
 
     constructor(rule:String): this() {
         amount = 1
-        val split = rule.toLowerCase().split(" bags contain ", " bag.", " bags.")
+        val split = rule.lowercase().split(" bags contain ", " bag.", " bags.")
         color = split[0]
         if(split[1] == "no other") {
             contains = listOf()
@@ -50,14 +50,14 @@ private class Rule() {
 private fun canContainBag(color: String, rules: List<Rule>): List<Rule> {
     val result: MutableList<Rule> = mutableListOf()
 
-    val rulesContainingThisColor = rules.filter { it.contains.map { it.color.toLowerCase() }.contains(color.toLowerCase()) }.toList()
+    val rulesContainingThisColor = rules.filter { it.contains.map { it.color.lowercase() }.contains(color.lowercase()) }.toList()
     result.addAll(rulesContainingThisColor)
     result.addAll(rulesContainingThisColor.flatMap { canContainBag(it.color, rules) }.toList())
     return result.distinct()
 }
 
 private fun getBagCount(color: String, rules: List<Rule>): Long {
-    val thisBagRule = rules.filter { it.color.toLowerCase() == color.toLowerCase() }.get(0)
+    val thisBagRule = rules.filter { it.color.lowercase() == color.lowercase() }.get(0)
     if (thisBagRule.contains.isEmpty()) {
         return 1
     }

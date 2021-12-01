@@ -10,7 +10,7 @@ fun main() {
     val lines = readFileLineByLineToText("2019_03.txt").map { Line(it.toDirections()) }.toList()
     val junction1 = lines[0].points.intersect(lines[1].points).filter { it != Point(x = 0, y= 0, steps = 0) }
     val junction2 = lines[1].points.intersect(junction1)
-    println("A: " + (junction1.map { it.getManhattanDistance() }.min()))
+    println("A: " + (junction1.map { it.getManhattanDistance() }.minOrNull()))
     println("B: " + ((junction1 + junction2).groupByTo(HashMap(), { it }, { it.steps }).values.map { it.reduce { i1, i2 -> i1!!.plus(i2!!) } }.sortedBy { it }.firstOrNull()))
 }
 

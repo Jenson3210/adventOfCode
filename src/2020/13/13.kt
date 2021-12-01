@@ -15,7 +15,7 @@ fun main() {
         .split(",")
         .filter { it != "x" }
         .map { it.toInt() }
-        .minWith(Comparator.comparingInt { (((arrivalTime / it) + 1) * it - arrivalTime) })
+        .minWithOrNull(Comparator.comparingInt { (((arrivalTime / it) + 1) * it - arrivalTime) })
     val waitingtime = (((arrivalTime / busId!!) + 1) * busId - arrivalTime)
     println(waitingtime * busId)
 

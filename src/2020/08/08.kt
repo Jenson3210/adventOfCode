@@ -96,7 +96,7 @@ private fun operation(operationLine: String) : Operation {
 }
 
 private fun operationType(operator: String) : OperationType {
-    return when(operator.toLowerCase()) {
+    return when(operator.lowercase()) {
         "acc" -> OperationType.ADD
         "jmp" -> OperationType.JUMP
         "nop" -> OperationType.NOOP

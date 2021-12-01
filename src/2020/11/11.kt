@@ -23,12 +23,12 @@ private class WaitingArea(seats : List<String>) {
 
     fun getOccupiedSeatsUsingAdjacentSeats() : Int {
         stabilizeWaitingArea(this::getNewStateAdjacacentSeats)
-        return seats.map { it.filterNotNull().filter { it!!.taken }.count() }.sum()
+        return seats.map { it.filterNotNull().filter { it.taken }.count() }.sum()
     }
 
     fun getOccupiedSeatsUsingVisibleSeats() : Int {
         stabilizeWaitingArea(this::getNewStateVisibleSeats)
-        return seats.map { it.filterNotNull().filter { it!!.taken }.count() }.sum()
+        return seats.map { it.filterNotNull().filter { it.taken }.count() }.sum()
     }
 
     private fun stabilizeWaitingArea(seatingRule: ((Int, Int) -> Seat?)) {

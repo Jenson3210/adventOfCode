@@ -38,7 +38,7 @@ fun main() {
             moon.move()
         }
     }
-    println("A: " + moonsA.sumBy { it.getEnergy() })
+    println("A: " + moonsA.sumOf { it.getEnergy() })
 
     val intermediateTime = System.currentTimeMillis()
 

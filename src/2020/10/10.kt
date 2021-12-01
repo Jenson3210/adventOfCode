@@ -25,7 +25,7 @@ private class JoltageAdapterList(joltageAdapters: List<JoltageAdapter>) {
 
     init {
         val adapters = joltageAdapters.toMutableList()
-        adapters.add(JoltageAdapter((joltageAdapters.maxBy { it.joltage }?.joltage ?: 0) + 3))
+        adapters.add(JoltageAdapter((joltageAdapters.maxByOrNull { it.joltage }?.joltage ?: 0) + 3))
         adapters.add(JoltageAdapter(0))
         this.joltageAdapters = adapters.sortedBy { it.joltage }
     }
@@ -43,7 +43,7 @@ private class JoltageAdapterList(joltageAdapters: List<JoltageAdapter>) {
     }
 
     fun getPossibilitiesCount() : Long {
-        val paths = Array(size = joltageAdapters.maxBy { it.joltage }!!.joltage + 1) {0L}
+        val paths = Array(size = joltageAdapters.maxByOrNull { it.joltage }!!.joltage + 1) {0L}
 
         paths[0] = 1L
         joltageAdapters.forEach {

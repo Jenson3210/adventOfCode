@@ -4,17 +4,18 @@ import util.cartesianProduct
 import util.printDay
 import util.readFileLineByLineToText
 import util.sumByLong
+import kotlin.streams.toList
 
 fun main() {
     printDay(1)
     val preamble = Preamble(25)
     print("The first number that does not follow the preamble: ")
-    val solution = readFileLineByLineToText("2020_09.txt").dropWhile { preamble.addNumber(it.toLong()) }.findFirst().orElseGet(null)
+    val solution = readFileLineByLineToText("2020_09.txt").toList().dropWhile { preamble.addNumber(it.toLong()) }.firstOrNull()
     println(solution)
 
     printDay(2)
     print("The first number that does not follow the preamble: ")
-    println(preamble.getEncryptionWeakness(solution.toLong()))
+    println(preamble.getEncryptionWeakness(solution!!.toLong()))
 
 }
 
@@ -32,7 +33,7 @@ private class Preamble(val preambleSize: Int) {
     fun getEncryptionWeakness(number: Long) : Long {
         val encryptionWeaknessList = getEncryptionWeaknessList(number)
         if (encryptionWeaknessList.isNotEmpty()) {
-            return encryptionWeaknessList.min()!! + encryptionWeaknessList.max()!!
+            return encryptionWeaknessList.minOrNull()!! + encryptionWeaknessList.maxOrNull()!!
         }
         return 0
     }

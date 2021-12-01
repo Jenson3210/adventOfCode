@@ -12,13 +12,13 @@ fun main() {
 
 private class AsteroidMap(val fields: MutableMap<Point, Boolean> = mutableMapOf()) {
     fun addRow(asteroids: List<Char>) {
-        val row = fields.keys.map { it.y + 1 }.max() ?: 0
+        val row = fields.keys.map { it.y + 1 }.maxOrNull() ?: 0
         for (column in asteroids.indices) {
             fields[Point(column, row)] = asteroids[column].toString() == "#"
         }
     }
-    fun getHighestVisibleAsteroidCount() = fields.filter { it.value }.keys.map { getVisibleAsteroids(it).size }.max()
-    fun getHighestVisibleAsteroid() = fields.filter { it.value }.keys.maxBy { getVisibleAsteroids(it).size }!!
+    fun getHighestVisibleAsteroidCount() = fields.filter { it.value }.keys.map { getVisibleAsteroids(it).size }.maxOrNull()
+    fun getHighestVisibleAsteroid() = fields.filter { it.value }.keys.maxByOrNull { getVisibleAsteroids(it).size }!!
 
     private fun getVisibleAsteroids(coordinates: Point): MutableList<Pair<Double, MutableList<Point>>> {
         val fieldsCopy: MutableList<Pair<Double, MutableList<Point>>> = mutableListOf()

@@ -121,11 +121,11 @@ fun validHeight(input: String) : Boolean {
 }
 
 fun validHairColor(input: String) : Boolean {
-    return input.startsWith("#") && input.substring(1).toUpperCase().matches(Regex("[0-9A-F]+"))
+    return input.startsWith("#") && input.substring(1).uppercase().matches(Regex("[0-9A-F]+"))
 }
 
 fun validEyeColor(input: String) : Boolean {
-    return listOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth").contains(input.toLowerCase())
+    return listOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth").contains(input.lowercase())
 }
 
 fun validPassportId(input: String) : Boolean {
