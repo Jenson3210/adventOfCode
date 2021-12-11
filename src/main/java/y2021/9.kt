@@ -1,16 +1,16 @@
 package `2021`.`09`
 
-import util.multiplyLong
-import util.printDay
-import util.readFileLineByLineToText
+import utils.multiplyLong
+import utils.printDay
+import utils.readFileLineByLineToText
 import kotlin.streams.toList
 
 fun main() {
     printDay(1)
-    println(getRiskLevel(readFileLineByLineToText("2021_09.txt").toList()))
+    println(getRiskLevel(readFileLineByLineToText(2021, 9).toList()))
 
     printDay(2)
-    println(getBasins(readFileLineByLineToText("2021_09.txt").toList()))
+    println(getBasins(readFileLineByLineToText(2021, 9).toList()))
 }
 
 private fun getRiskLevel(input: List<String>): Long {

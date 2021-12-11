@@ -1,8 +1,8 @@
 package `2021`.`07`
 
-import util.printDay
-import util.readFileLineCsvToInt
-import util.sumByLong
+import utils.printDay
+import utils.readFileLineCsvToInt
+import utils.sumByLong
 import kotlin.math.abs
 import kotlin.streams.toList
 
@@ -15,7 +15,7 @@ fun main() {
 }
 
 private fun getLowestAmountOfFuelNeeded(transform: (Int) -> Long): Long {
-    val allNumbers = readFileLineCsvToInt("2021_07.txt").toList()
+    val allNumbers = readFileLineCsvToInt(2021, 7).toList()
     val min = allNumbers.minOrNull()!!
     val max = allNumbers.maxOrNull()!!
 

@@ -1,7 +1,7 @@
 package `2021`.`05`
 
-import util.printDay
-import util.readFileLineByLineToText
+import utils.printDay
+import utils.readFileLineByLineToText
 import kotlin.streams.toList
 
 fun main() {
@@ -13,7 +13,7 @@ fun main() {
 }
 
 private fun getPointsDay1(): Int {
-    return readFileLineByLineToText("2021_05.txt")
+    return readFileLineByLineToText(2121, 5)
         .filter { it.matchesDay1Pattern() }
         .flatMap { it.getPointsBetweenCoordinates().stream() }
         .toList()
@@ -24,7 +24,7 @@ private fun getPointsDay1(): Int {
 }
 
 private fun getPointsDay2(): Int {
-    return readFileLineByLineToText("2021_05.txt")
+    return readFileLineByLineToText(2121, 5)
         .flatMap { it.getPointsBetweenCoordinates().stream() }
         .toList()
         .groupingBy { it }

@@ -3,18 +3,18 @@ package `2021`.`03`
 import getElementsWithTheirCount
 import leastCommonElements
 import mostCommonElements
-import util.printDay
-import util.readFileLineByLineToText
-import util.readNthCharsOfEquallyLongLines
+import utils.printDay
+import utils.readFileLineByLineToText
+import utils.readNthCharsOfEquallyLongLines
 import java.util.function.BiPredicate
 import kotlin.streams.toList
 
 fun main() {
     printDay(1)
-    println(getPowerConsumption(readNthCharsOfEquallyLongLines("2021_03.txt")))
+    println(getPowerConsumption(readNthCharsOfEquallyLongLines(2021, 3)))
 
     printDay(2)
-    println(getLifeSupportRating(readFileLineByLineToText("2021_03.txt").toList()))
+    println(getLifeSupportRating(readFileLineByLineToText(2021, 3).toList()))
 }
 
 private fun getPowerConsumption(bits: List<List<Char>>): Long {

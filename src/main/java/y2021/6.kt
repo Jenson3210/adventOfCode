@@ -1,8 +1,8 @@
 package `2021`.`06`
 
-import util.printDay
-import util.readFileLineCsvToText
-import util.sumByLong
+import utils.printDay
+import utils.readFileLineCsvToText
+import utils.sumByLong
 import kotlin.streams.toList
 
 fun main() {
@@ -14,7 +14,7 @@ fun main() {
 }
 
 private fun getLanternFishCount(days: Int): Long {
-    var lanternfish = readFileLineCsvToText("2021_06.txt")
+    var lanternfish = readFileLineCsvToText(2021, 6)
         .map { it.toInt() }
         .toList()
         .groupingBy { it }

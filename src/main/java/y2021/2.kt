@@ -1,16 +1,16 @@
 package `2021`.`02`
 
-import util.printDay
-import util.readFileLineByLineToText
+import utils.printDay
+import utils.readFileLineByLineToText
 import java.util.stream.Stream
 
 
 fun main() {
     printDay(1)
-    println(getFinalPositionPart1(readFileLineByLineToText("2021_02.txt")))
+    println(getFinalPositionPart1(readFileLineByLineToText(2021, 2)))
 
     printDay(2)
-    println(getFinalPositionPart2(readFileLineByLineToText("2021_02.txt")))
+    println(getFinalPositionPart2(readFileLineByLineToText(2021, 2)))
 }
 
 private fun getFinalPositionPart1(directions: Stream<String>): Long {

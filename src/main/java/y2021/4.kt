@@ -1,9 +1,9 @@
-package `2021`.`04`
+package y2021
 
-import util.Table
-import util.printDay
-import util.readFileLineByLineToText
-import util.sumByLong
+import utils.Table
+import utils.printDay
+import utils.readFileLineByLineToText
+import utils.sumByLong
 
 fun main() {
     printDay(1)
@@ -14,8 +14,8 @@ fun main() {
 }
 
 private fun winBingo(): Long {
-    val bingoInput = "2021_04.txt".toBingoInput()
-    val bingoBoards = "2021_04.txt".toBingoBoards()
+    val bingoInput = bingoInput()
+    val bingoBoards = bingoBoards()
 
     var playing = true
     var round = 0
@@ -41,8 +41,8 @@ private fun winBingo(): Long {
 }
 
 private fun loseBingo(): Long {
-    val bingoInput = "2021_04.txt".toBingoInput()
-    val bingoBoards = "2021_04.txt".toBingoBoards()
+    val bingoInput = bingoInput()
+    val bingoBoards = bingoBoards()
 
     var playing = true
     var round = 0
@@ -66,13 +66,13 @@ private fun loseBingo(): Long {
 
 private data class BingoCell(val number: Int, var checked: Boolean = false)
 
-private fun String.toBingoInput() =
-    readFileLineByLineToText(this).limit(1).map { it.split(",") }.findFirst().get().map { it.toInt() }
+private fun bingoInput() =
+    readFileLineByLineToText(2021, 4).limit(1).map { it.split(",") }.findFirst().get().map { it.toInt() }
 
-private fun String.toBingoBoards(): MutableList<Table<BingoCell>> {
+private fun bingoBoards(): MutableList<Table<BingoCell>> {
     val bingoBoards: MutableList<Table<BingoCell>> = mutableListOf()
     var board: Table<BingoCell> = Table()
-    readFileLineByLineToText(this)
+    readFileLineByLineToText(2021, 4)
         .skip(1)
         .forEach {
             if (it.isBlank()) {

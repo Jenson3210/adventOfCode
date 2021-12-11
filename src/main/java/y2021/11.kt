@@ -1,13 +1,13 @@
-package `2021`.`11`
+package y2021
 
-import util.*
+import utils.*
 import kotlin.streams.toList
 
 fun main() {
     printDay(1)
     println(
         solveDay1(
-            readFileLineByLineToText("2021_11.txt").toList()
+            readFileLineByLineToText(2021, 11).toList()
                 .map { it.toList().map { Character.getNumericValue(it) }.map { Octopus(it) } }.toNavigateableMap()
         )
     )
@@ -15,7 +15,7 @@ fun main() {
     printDay(2)
     println(
         solveDay2(
-            readFileLineByLineToText("2021_11.txt").toList()
+            readFileLineByLineToText(2021, 11).toList()
                 .map { it.toList().map { Character.getNumericValue(it) }.map { Octopus(it) } }.toNavigateableMap()
         )
     )

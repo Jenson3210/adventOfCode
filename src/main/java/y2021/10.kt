@@ -1,16 +1,16 @@
-package `2021`.`10`
+package y2021
 
-import util.printDay
-import util.readFileLineByLineToText
-import util.sumByLong
+import utils.printDay
+import utils.readFileLineByLineToText
+import utils.sumByLong
 import kotlin.streams.toList
 
 fun main() {
     printDay(1)
-    println(readFileLineByLineToText("2021_10.txt").toList().sumByLong { it.findUnclosedDelimiterScore() })
+    println(readFileLineByLineToText(2021, 10).toList().sumByLong { it.findUnclosedDelimiterScore() })
 
     printDay(2)
-    val sortedScores = readFileLineByLineToText("2021_10.txt").toList().map { it.findUnfinishedDelimiterScore() }.filterNot { it == 0L }.sorted()
+    val sortedScores = readFileLineByLineToText(2021, 10).toList().map { it.findUnfinishedDelimiterScore() }.filterNot { it == 0L }.sorted()
     println(sortedScores[(sortedScores.size / 2)])
 }
 

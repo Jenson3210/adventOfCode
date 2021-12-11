@@ -1,17 +1,17 @@
 package `2021`.`08`
 
 import mostCommonElements
-import util.printDay
-import util.readFileLineByLineToText
-import util.sumByLong
+import utils.printDay
+import utils.readFileLineByLineToText
+import utils.sumByLong
 import kotlin.streams.toList
 
 fun main() {
     printDay(1)
-    println(get1Or4Or7Or8Count(readFileLineByLineToText("2021_08.txt").toList()))
+    println(get1Or4Or7Or8Count(readFileLineByLineToText(2021, 8).toList()))
 
     printDay(2)
-    println(sum(readFileLineByLineToText("2021_08.txt").toList()))
+    println(sum(readFileLineByLineToText(2021, 8).toList()))
 }
 
 private fun get1Or4Or7Or8Count(input: List<String>): Int {

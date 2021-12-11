@@ -1,16 +1,15 @@
-package `2021`.`01`
+package y2021
 
-import util.printDay
-import util.readFileLineByLineToInt
+import utils.printDay
+import utils.readFileLineByLineToInt
 import kotlin.streams.toList
-
 
 fun main() {
     printDay(1)
-    println(getIncreasedCountOfPairs(readFileLineByLineToInt("2021_01.txt").toList()))
+    println(getIncreasedCountOfPairs(readFileLineByLineToInt(2021, 1).toList()))
 
     printDay(2)
-    println(getIncreasedCountOfMovingWindows(readFileLineByLineToInt("2021_01.txt").toList()))
+    println(getIncreasedCountOfMovingWindows(readFileLineByLineToInt(2021, 1).toList()))
 }
 
 fun getIncreasedCountOfPairs(values: List<Int>): Long {
