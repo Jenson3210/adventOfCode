@@ -1,4 +1,4 @@
-package `2021`.`07`
+package y2021
 
 import utils.printDay
 import utils.readFileLineCsvToInt

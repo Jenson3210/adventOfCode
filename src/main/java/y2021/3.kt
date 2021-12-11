@@ -1,4 +1,4 @@
-package `2021`.`03`
+package y2021
 
 import getElementsWithTheirCount
 import leastCommonElements

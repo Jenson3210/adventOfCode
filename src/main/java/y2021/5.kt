@@ -1,4 +1,4 @@
-package `2021`.`05`
+package y2021
 
 import utils.printDay
 import utils.readFileLineByLineToText

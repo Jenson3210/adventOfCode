@@ -1,4 +1,4 @@
-package `2021`.`09`
+package y2021
 
 import utils.multiplyLong
 import utils.printDay

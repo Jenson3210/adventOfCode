@@ -1,4 +1,4 @@
-package `2021`.`08`
+package y2021
 
 import mostCommonElements
 import utils.printDay
