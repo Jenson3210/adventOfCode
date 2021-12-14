@@ -25,3 +25,16 @@ fun <T : Any> List<T>.leastCommonElements(): List<T> {
 fun <T : Any> List<T>.getElementsWithTheirCount(): Map<T, Int> {
     return groupingBy { it }.eachCount()
 }
+fun <T : Any> List<T>.getElementsWithTheirLongCount(): Map<T, Long> {
+    return groupingBy { it }.foldTo(destination = mutableMapOf(),
+            initialValueSelector = { _, _ -> kotlin.jvm.internal.Ref.LongRef() },
+            operation = { _, acc, _ -> acc.apply { element += 1 } })
+            .mapValuesInPlace { it.value.element }
+}
+
+internal inline fun <K, V, R> MutableMap<K, V>.mapValuesInPlace(f: (Map.Entry<K, V>) -> R): MutableMap<K, R> {
+    entries.forEach {
+        (it as MutableMap.MutableEntry<K, R>).setValue(f(it))
+    }
+    return (this as MutableMap<K, R>)
+}
