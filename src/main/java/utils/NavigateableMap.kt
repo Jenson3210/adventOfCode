@@ -25,6 +25,9 @@ class NavigateableMap<T>(private val data: Map<Int, Map<Int, T>>) :Iterable<T> {
     fun rows() = data.values
     fun cells() = data.values.flatMap { it.values }
 
+    fun rowIndices() = data.values.indices
+    fun colIndices() = data.values.first().values.indices
+
     fun getNorthCell(x: Int, y: Int) = getCell(x, y, -1, 0);
     fun getEastCell(x: Int, y: Int) = getCell(x, y, 0, 1);
     fun getSouthCell(x: Int, y: Int) = getCell(x, y, 1, 0);
