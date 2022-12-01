@@ -3,7 +3,6 @@ package y2021
 import printPairOfOrColsAndRows
 import utils.printDay
 import utils.readFileLineByLineToText
-import kotlin.streams.toList
 
 fun main() {
     printDay(1)

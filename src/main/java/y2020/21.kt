@@ -1,10 +1,9 @@
 package y2020
 
-import commonObjects
+import utils.commonObjects
 import utils.printDay
 import utils.readFileLineByLineToText
 import java.util.stream.Stream
-import kotlin.streams.toList
 
 fun main() {
     printDay(1)
