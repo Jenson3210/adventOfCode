@@ -1,7 +1,6 @@
 package y2021
 
 import utils.*
-import kotlin.streams.toList
 
 fun main() {
     printDay(1)

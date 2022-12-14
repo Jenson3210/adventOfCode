@@ -52,6 +52,7 @@ class NavigateableMap<T>(private val data: Map<Int, Map<Int, T>>) :Iterable<T> {
         listOfNotNull(getNorthCell(x, y), getEastCell(x, y), getSouthCell(x, y), getWestCell(x, y))
 
     fun getCell(x: Int, y: Int) = getCell(x, y, 0, 0)
+    fun first(predicate: (T) -> Boolean) = cells().first(predicate)
     private fun getCell(x: Int, y: Int, xOperation: Int, yOperation: Int) =
         data.getOrDefault(x + xOperation, mutableMapOf())[y + yOperation]
 
